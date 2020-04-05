@@ -1,0 +1,551 @@
+{
+  "textureSpecs": [
+    {
+      "isAvatar": true,
+      "layout": [
+        3,
+        4
+      ],
+      "name": "beth",
+      "path": "static/textures/beth.png",
+      "tiles": {
+        "standing_back": [
+          0,
+          0
+        ],
+        "standing_fwd": [
+          0,
+          1
+        ],
+        "standing_left": [
+          0,
+          2
+        ],
+        "standing_right": [
+          0,
+          3
+        ],
+        "walking_back1": [
+          1,
+          0
+        ],
+        "walking_back2": [
+          1,
+          1
+        ],
+        "walking_fwd1": [
+          1,
+          2
+        ],
+        "walking_fwd2": [
+          1,
+          3
+        ],
+        "walking_left1": [
+          2,
+          0
+        ],
+        "walking_left2": [
+          2,
+          1
+        ],
+        "walking_right1": [
+          2,
+          2
+        ],
+        "walking_right2": [
+          2,
+          3
+        ]
+      }
+    },
+    {
+      "isAvatar": true,
+      "layout": [
+        3,
+        4
+      ],
+      "name": "caleb",
+      "path": "static/textures/caleb.png",
+      "tiles": {
+        "standing_back": [
+          0,
+          0
+        ],
+        "standing_fwd": [
+          0,
+          1
+        ],
+        "standing_left": [
+          0,
+          2
+        ],
+        "standing_right": [
+          0,
+          3
+        ],
+        "walking_back1": [
+          1,
+          0
+        ],
+        "walking_back2": [
+          1,
+          1
+        ],
+        "walking_fwd1": [
+          1,
+          2
+        ],
+        "walking_fwd2": [
+          1,
+          3
+        ],
+        "walking_left1": [
+          2,
+          0
+        ],
+        "walking_left2": [
+          2,
+          1
+        ],
+        "walking_right1": [
+          2,
+          2
+        ],
+        "walking_right2": [
+          2,
+          3
+        ]
+      }
+    },
+    {
+      "isAvatar": true,
+      "layout": [
+        3,
+        4
+      ],
+      "name": "dan",
+      "path": "static/textures/dan.png",
+      "tiles": {
+        "standing_back": [
+          0,
+          0
+        ],
+        "standing_fwd": [
+          0,
+          1
+        ],
+        "standing_left": [
+          0,
+          2
+        ],
+        "standing_right": [
+          0,
+          3
+        ],
+        "walking_back1": [
+          1,
+          0
+        ],
+        "walking_back2": [
+          1,
+          1
+        ],
+        "walking_fwd1": [
+          1,
+          2
+        ],
+        "walking_fwd2": [
+          1,
+          3
+        ],
+        "walking_left1": [
+          2,
+          0
+        ],
+        "walking_left2": [
+          2,
+          1
+        ],
+        "walking_right1": [
+          2,
+          2
+        ],
+        "walking_right2": [
+          2,
+          3
+        ]
+      }
+    },
+    {
+      "isAvatar": true,
+      "layout": [
+        3,
+        4
+      ],
+      "name": "emily",
+      "path": "static/textures/emily.png",
+      "tiles": {
+        "standing_back": [
+          0,
+          0
+        ],
+        "standing_fwd": [
+          0,
+          1
+        ],
+        "standing_left": [
+          0,
+          2
+        ],
+        "standing_right": [
+          0,
+          3
+        ],
+        "walking_back1": [
+          1,
+          0
+        ],
+        "walking_back2": [
+          1,
+          1
+        ],
+        "walking_fwd1": [
+          1,
+          2
+        ],
+        "walking_fwd2": [
+          1,
+          3
+        ],
+        "walking_left1": [
+          2,
+          0
+        ],
+        "walking_left2": [
+          2,
+          1
+        ],
+        "walking_right1": [
+          2,
+          2
+        ],
+        "walking_right2": [
+          2,
+          3
+        ]
+      }
+    },
+    {
+      "isAvatar": false,
+      "layout": [
+        1,
+        4
+      ],
+      "name": "furniture",
+      "path": "static/textures/furniture.png",
+      "tiles": {
+        "lockdown": [
+          0,
+          0
+        ],
+        "window_empire_state": [
+          0,
+          1
+        ],
+        "window_hudson_yards": [
+          0,
+          2
+        ],
+        "window_midtown": [
+          0,
+          3
+        ]
+      }
+    },
+    {
+      "isAvatar": true,
+      "layout": [
+        3,
+        4
+      ],
+      "name": "jesse",
+      "path": "static/textures/jesse.png",
+      "tiles": {
+        "standing_back": [
+          0,
+          0
+        ],
+        "standing_fwd": [
+          0,
+          1
+        ],
+        "standing_left": [
+          0,
+          2
+        ],
+        "standing_right": [
+          0,
+          3
+        ],
+        "walking_back_1": [
+          1,
+          0
+        ],
+        "walking_back_2": [
+          1,
+          1
+        ],
+        "walking_fwd_1": [
+          1,
+          2
+        ],
+        "walking_fwd_2": [
+          1,
+          3
+        ],
+        "walking_left_1": [
+          2,
+          0
+        ],
+        "walking_left_2": [
+          2,
+          1
+        ],
+        "walking_right_1": [
+          2,
+          2
+        ],
+        "walking_right_2": [
+          2,
+          3
+        ]
+      }
+    },
+    {
+      "isAvatar": true,
+      "layout": [
+        3,
+        4
+      ],
+      "name": "mike",
+      "path": "static/textures/mike.png",
+      "tiles": {
+        "standing_back": [
+          0,
+          0
+        ],
+        "standing_fwd": [
+          0,
+          1
+        ],
+        "standing_fwd1": [
+          0,
+          2
+        ],
+        "standing_fwd2": [
+          0,
+          3
+        ],
+        "standing_left": [
+          1,
+          0
+        ],
+        "standing_right": [
+          1,
+          1
+        ],
+        "walking_back1": [
+          1,
+          2
+        ],
+        "walking_back2": [
+          1,
+          3
+        ],
+        "walking_left1": [
+          2,
+          0
+        ],
+        "walking_left2": [
+          2,
+          1
+        ],
+        "walking_right1": [
+          2,
+          2
+        ],
+        "walking_right2": [
+          2,
+          3
+        ]
+      }
+    },
+    {
+      "isAvatar": false,
+      "layout": [
+        1,
+        4
+      ],
+      "name": "office",
+      "path": "static/textures/office.png",
+      "tiles": {
+        "carpet": [
+          0,
+          0
+        ],
+        "couch1": [
+          0,
+          1
+        ],
+        "couch2": [
+          0,
+          2
+        ],
+        "wall": [
+          0,
+          3
+        ]
+      }
+    },
+    {
+      "isAvatar": false,
+      "layout": [
+        8,
+        4
+      ],
+      "name": "outside",
+      "path": "static/textures/outside.png",
+      "tiles": {
+        "bush": [
+          0,
+          0
+        ],
+        "dirt": [
+          2,
+          1
+        ],
+        "dirt-b": [
+          0,
+          1
+        ],
+        "dirt-bl": [
+          0,
+          2
+        ],
+        "dirt-br": [
+          0,
+          3
+        ],
+        "dirt-l": [
+          1,
+          0
+        ],
+        "dirt-lt": [
+          1,
+          1
+        ],
+        "dirt-r": [
+          1,
+          2
+        ],
+        "dirt-t": [
+          1,
+          3
+        ],
+        "dirt-tr": [
+          2,
+          0
+        ],
+        "grass": [
+          3,
+          0
+        ],
+        "grass-tl": [
+          2,
+          2
+        ],
+        "grass-tr": [
+          2,
+          3
+        ],
+        "path_corner_bottom_left": [
+          3,
+          1
+        ],
+        "path_corner_bottom_right": [
+          3,
+          2
+        ],
+        "path_corner_top_left": [
+          3,
+          3
+        ],
+        "path_corner_top_right": [
+          4,
+          0
+        ],
+        "path_edge_both_sides": [
+          4,
+          1
+        ],
+        "path_edge_bottom": [
+          4,
+          2
+        ],
+        "path_edge_left": [
+          4,
+          3
+        ],
+        "path_edge_right": [
+          5,
+          0
+        ],
+        "path_edge_top": [
+          5,
+          1
+        ],
+        "path_edge_top_and_bottom": [
+          5,
+          2
+        ],
+        "path_end_bottom": [
+          5,
+          3
+        ],
+        "path_end_left": [
+          6,
+          0
+        ],
+        "path_end_right": [
+          6,
+          1
+        ],
+        "path_end_top": [
+          6,
+          2
+        ],
+        "path_turn_bottom_left": [
+          6,
+          3
+        ],
+        "path_turn_bottom_right": [
+          7,
+          0
+        ],
+        "path_turn_top_left": [
+          7,
+          1
+        ],
+        "path_turn_top_right": [
+          7,
+          2
+        ],
+        "tree": [
+          7,
+          3
+        ]
+      }
+    }
+  ]
+}

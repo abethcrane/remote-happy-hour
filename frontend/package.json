@@ -1,0 +1,56 @@
+{
+  "name": "remote_happy_hour",
+  "version": "0.1.0",
+  "scripts": {
+    "build:dev": "webpack-dev-server --progress -d --watch --config ./config/webpack_dev_server_native.common.js",
+    "build:prod": "webpack --config ./config/webpack.prod.js",
+    "formatAll": "prettier --write js/**/*.js"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.3.4",
+    "@babel/helper-function-name": "^7.1.0",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/preset-env": "^7.3.4",
+    "@babel/preset-react": "^7.0.0",
+    "app-root-path": "^2.1.0",
+    "babel-loader": "^8.0.6",
+    "concurrently": "^4.1.1",
+    "css-loader": "^3.2.0",
+    "enzyme": "^3.7.0",
+    "enzyme-adapter-react-16": "^1.6.0",
+    "enzyme-to-json": "^3.3.0",
+    "eslint": "^6.0.1",
+    "eslint-plugin-import": "^2.18.2",
+    "jest": "^24.9.0",
+    "node-sass": "^4.10.0",
+    "prettier": "^2.0.1",
+    "protobufjs": "^6.8.8",
+    "react-test-renderer": "^16.6.3",
+    "sass-loader": "^7.3.1",
+    "style-loader": "^1.0.0",
+    "webpack": "^4.42.0",
+    "webpack-bundle-analyzer": "^3.3.2",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.7.2",
+    "webpack-glsl-loader": "^1.0.1",
+    "webpack-merge": "^4.1.4"
+  },
+  "dependencies": {
+    "gl-matrix": "^3.1.0",
+    "lodash": "^4.17.15",
+    "prop-types": "^15.6.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-measure": "^2.3.0",
+    "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1",
+    "react-router-prop-types": "^1.0.4",
+    "socket.io-client": "^2.3.0"
+  },
+  "jest": {
+    "setupTestFrameworkScriptFile": "<rootDir>/tests/setupTests.js",
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ]
+  }
+}

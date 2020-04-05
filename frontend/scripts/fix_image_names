@@ -1,0 +1,15 @@
+#!/usr/bin/env bash -e
+# Manually rename images so bazel isn't upset. Shouldn't need to be run often.
+
+# move into the frontend directory
+cd $(dirname $0)/..
+cd texture_assets
+
+find . -name '*.png' | while read -r image
+do
+# for image in "$(find . -name '*.png')"; do
+    image_rewrite="$(echo "$image" | tr ' ' '_' | awk '{print tolower($0)}')"
+    if [[ "$image" != "$image_rewrite" ]]; then
+        git mv "$image" "$image_rewrite"
+    fi
+done

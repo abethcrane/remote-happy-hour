@@ -1,0 +1,753 @@
+{
+    "office": {
+        "colliders": [
+            {
+                "position": {
+                    "x": -10,
+                    "y": -6
+                },
+                "size": {
+                    "w": 20,
+                    "h": 11
+                },
+                "texture": "office",
+                "subtexture": "carpet",
+                "category": "ground"
+            },
+            {
+                "position": {
+                    "x": -10,
+                    "y": 4.5
+                },
+                "size": {
+                    "w": 20,
+                    "h": 3
+                },
+                "texture": "office",
+                "subtexture": "wall",
+                "category": "wall"
+            },
+            {
+                "position": {
+                    "x": -4,
+                    "y": 5.5
+                },
+                "size": {
+                    "w": 1,
+                    "h": 1
+                },
+                "tile": 1,
+                "texture": "furniture",
+                "subtexture": "window_hudson_yards",
+                "category": "wall"
+            },
+            {
+                "position": {
+                    "x": -1,
+                    "y": 5.5
+                },
+                "size": {
+                    "w": 1,
+                    "h": 1
+                },
+                "tile": 1,
+                "texture": "furniture",
+                "subtexture": "window_midtown",
+                "category": "wall"
+            },
+            {
+                "position": {
+                    "x": 2,
+                    "y": 5.5
+                },
+                "size": {
+                    "w": 1,
+                    "h": 1
+                },
+                "tile": 1,
+                "texture": "furniture",
+                "subtexture": "window_empire_state",
+                "category": "wall"
+            },
+            {
+                "position": {
+                    "x": -8,
+                    "y": 5.5
+                },
+                "size": {
+                    "w": 2,
+                    "h": 1
+                },
+                "tile": {
+                    "x": 2,
+                    "y": 1
+                },
+                "texture": "furniture",
+                "subtexture": "lockdown",
+                "category": "wall"
+            },
+            {
+                "position": {
+                    "x": -6,
+                    "y": -1
+                },
+                "size": {
+                    "w": 1.75,
+                    "h": 1
+                },
+                "tile": {
+                    "x": 1.75,
+                    "y": 1
+                },
+                "texture": "office",
+                "subtexture": "couch1",
+                "category": "wall"
+            },
+            {
+                "position": {
+                    "x": 6,
+                    "y": -4
+                },
+                "size": {
+                    "w": 1.75,
+                    "h": 1
+                },
+                "tile": {
+                    "x": 1.75,
+                    "y": 1
+                },
+                "texture": "office",
+                "subtexture": "couch1",
+                "category": "wall"
+            },
+            {
+                "position": {
+                    "x": -8,
+                    "y": 3
+                },
+                "size": {
+                    "w": 1.75,
+                    "h": 1
+                },
+                "tile": {
+                    "x": 1.75,
+                    "y": 1
+                },
+                "texture": "office",
+                "subtexture": "couch1",
+                "category": "wall"
+            },
+            {
+                "position": {
+                    "x": -9,
+                    "y": 2
+                },
+                "size": {
+                    "w": 1.75,
+                    "h": 1
+                },
+                "tile": {
+                    "x": 1.75,
+                    "y": 1
+                },
+                "texture": "office",
+                "subtexture": "couch1",
+                "category": "wall"
+            },
+            {
+                "position": {
+                    "x": -4.25,
+                    "y": -5
+                },
+                "size": {
+                    "w": 1.25,
+                    "h": 1
+                },
+                "tile": {
+                    "x": 1.25,
+                    "y": 1
+                },
+                "texture": "office",
+                "subtexture": "couch2",
+                "category": "wall"
+            },
+            {
+                "position": {
+                    "x": -6.25,
+                    "y": -5
+                },
+                "size": {
+                    "w": 1.25,
+                    "h": 1
+                },
+                "tile": {
+                    "x": 1.25,
+                    "y": 1
+                },
+                "texture": "office",
+                "subtexture": "couch2",
+                "category": "wall"
+            },
+            {
+                "position": {
+                    "x": 6.75,
+                    "y": 1
+                },
+                "size": {
+                    "w": 1.25,
+                    "h": 1
+                },
+                "tile": {
+                    "x": 1.25,
+                    "y": 1
+                },
+                "texture": "office",
+                "subtexture": "couch2",
+                "category": "wall"
+            },
+            {
+                "position": {
+                    "x": 5.75,
+                    "y": 0
+                },
+                "size": {
+                    "w": 1.25,
+                    "h": 1
+                },
+                "tile": {
+                    "x": 1.25,
+                    "y": 1
+                },
+                "texture": "office",
+                "subtexture": "couch2",
+                "category": "wall"
+            }
+        ]
+    },
+    "outside": {
+        "colliders": [
+            {
+                "position": {
+                    "x": -10,
+                    "y": -6
+                },
+                "size": {
+                    "w": 20,
+                    "h": 11
+                },
+                "texture": "outside",
+                "subtexture": "grass",
+                "category": "ground"
+            },
+            {
+                "position": {
+                    "x": -4,
+                    "y": -6
+                },
+                "size": {
+                    "w": 1,
+                    "h": 1
+                },
+                "texture": "outside",
+                "subtexture": "path_end_bottom",
+                "category": "ground"
+            },
+            {
+                "position": {
+                    "x": -4,
+                    "y": -5
+                },
+                "size": {
+                    "w": 1,
+                    "h": 3.2
+                },
+                "texture": "outside",
+                "subtexture": "path_edge_both_sides",
+                "category": "ground"
+            },
+            {
+                "position": {
+                    "x": -3,
+                    "y": -6
+                },
+                "size": {
+                    "w": 1,
+                    "h": 4
+                },
+                "tile": {
+                    "x": 1,
+                    "y": 1
+                },
+                "texture": "outside",
+                "subtexture": "bush",
+                "category": "wall"
+            },
+            {
+                "position": {
+                    "x": -4,
+                    "y": -2
+                },
+                "size": {
+                    "w": 1,
+                    "h": 1
+                },
+                "texture": "outside",
+                "subtexture": "dirt",
+                "category": "ground"
+            },
+            {
+                "position": {
+                    "x": -4,
+                    "y": -1
+                },
+                "size": {
+                    "w": 1,
+                    "h": 1
+                },
+                "texture": "outside",
+                "subtexture": "path_edge_both_sides",
+                "category": "ground"
+            },
+            {
+                "position": {
+                    "x": -4,
+                    "y": 0
+                },
+                "size": {
+                    "w": 1,
+                    "h": 1
+                },
+                "texture": "outside",
+                "subtexture": "path_corner_top_left",
+                "category": "ground"
+            },
+            {
+                "position": {
+                    "x": -3,
+                    "y": 0
+                },
+                "size": {
+                    "w": 5,
+                    "h": 1
+                },
+                "texture": "outside",
+                "subtexture": "path_edge_top_and_bottom",
+                "category": "ground"
+            },
+            {
+                "position": {
+                    "x": 2,
+                    "y": 0
+                },
+                "size": {
+                    "w": 1,
+                    "h": 1
+                },
+                "texture": "outside",
+                "subtexture": "path_corner_bottom_right",
+                "category": "ground"
+            },
+            {
+                "position": {
+                    "x": 2,
+                    "y": 1
+                },
+                "size": {
+                    "w": 1,
+                    "h": 1
+                },
+                "texture": "outside",
+                "subtexture": "path_corner_top_left",
+                "category": "ground"
+            },
+            {
+                "position": {
+                    "x": 3,
+                    "y": 1
+                },
+                "size": {
+                    "w": 7,
+                    "h": 1
+                },
+                "texture": "outside",
+                "subtexture": "path_edge_top_and_bottom",
+                "category": "ground"
+            },
+            {
+                "position": {
+                    "x": 3,
+                    "y": 2
+                },
+                "size": {
+                    "w": 7,
+                    "h": 1
+                },
+                "texture": "outside",
+                "subtexture": "bush",
+                "category": "wall"
+            },
+            {
+                "position": {
+                    "x": -3,
+                    "y": -2
+                },
+                "size": {
+                    "w": 2,
+                    "h": 1
+                },
+                "texture": "outside",
+                "subtexture": "path_edge_top_and_bottom",
+                "category": "ground"
+            },
+            {
+                "position": {
+                    "x": -2,
+                    "y": -3
+                },
+                "size": {
+                    "w": 3,
+                    "h": 1
+                },
+                "texture": "outside",
+                "subtexture": "bush",
+                "category": "wall"
+            },
+            {
+                "position": {
+                    "x": 0,
+                    "y": -2
+                },
+                "size": {
+                    "w": 1,
+                    "h": 1
+                },
+                "texture": "outside",
+                "subtexture": "bush",
+                "category": "wall"
+            },
+            {
+                "position": {
+                    "x": -1,
+                    "y": -2
+                },
+                "size": {
+                    "w": 1,
+                    "h": 1
+                },
+                "texture": "outside",
+                "subtexture": "path_end_right",
+                "category": "ground"
+            },
+            {
+                "position": {
+                    "x": -4,
+                    "y": -2
+                },
+                "size": {
+                    "w": -6,
+                    "h": 1
+                },
+                "texture": "outside",
+                "subtexture": "path_edge_top_and_bottom",
+                "category": "ground"
+            },
+            {
+                "position": {
+                    "x": -10,
+                    "y": -2
+                },
+                "size": {
+                    "w": 1,
+                    "h": 1
+                },
+                "texture": "outside",
+                "subtexture": "path_corner_bottom_left",
+                "category": "ground"
+            },
+            {
+                "position": {
+                    "x": -10,
+                    "y": -1
+                },
+                "size": {
+                    "w": 1,
+                    "h": 2
+                },
+                "texture": "outside",
+                "subtexture": "path_edge_both_sides",
+                "category": "ground"
+            },
+            {
+                "position": {
+                    "x": -10,
+                    "y": -1
+                },
+                "size": {
+                    "w": 1,
+                    "h": 2
+                },
+                "texture": "outside",
+                "subtexture": "path_edge_both_sides",
+                "category": "ground"
+            },
+            {
+                "position": {
+                    "x": -10,
+                    "y": 1
+                },
+                "size": {
+                    "w": 1,
+                    "h": 1
+                },
+                "texture": "outside",
+                "subtexture": "path_corner_top_left",
+                "category": "ground"
+            },
+            {
+                "position": {
+                    "x": -9,
+                    "y": 1
+                },
+                "size": {
+                    "w": 3,
+                    "h": 1
+                },
+                "texture": "outside",
+                "subtexture": "path_edge_top_and_bottom",
+                "category": "ground"
+            },
+            {
+                "position": {
+                    "x": -6,
+                    "y": 1
+                },
+                "size": {
+                    "w": 1,
+                    "h": 1
+                },
+                "texture": "outside",
+                "subtexture": "path_corner_bottom_right",
+                "category": "ground"
+            },
+            {
+                "position": {
+                    "x": -6,
+                    "y": 2
+                },
+                "size": {
+                    "w": 1,
+                    "h": 2
+                },
+                "texture": "outside",
+                "subtexture": "dirt",
+                "category": "ground"
+            },
+            {
+                "position": {
+                    "x": -7,
+                    "y": 3
+                },
+                "size": {
+                    "w": 1,
+                    "h": 1
+                },
+                "texture": "outside",
+                "subtexture": "path_edge_left",
+                "category": "ground"
+            },
+            {
+                "position": {
+                    "x": -7,
+                    "y": 2
+                },
+                "size": {
+                    "w": 1,
+                    "h": 1
+                },
+                "texture": "outside",
+                "subtexture": "path_corner_bottom_left",
+                "category": "ground"
+            },
+            {
+                "position": {
+                    "x": -7,
+                    "y": 4
+                },
+                "size": {
+                    "w": 1,
+                    "h": 1
+                },
+                "texture": "outside",
+                "subtexture": "path_corner_top_left",
+                "category": "ground"
+            },
+            {
+                "position": {
+                    "x": -6,
+                    "y": 4
+                },
+                "size": {
+                    "w": 1,
+                    "h": 1
+                },
+                "texture": "outside",
+                "subtexture": "path_edge_top",
+                "category": "ground"
+            },
+            {
+                "position": {
+                    "x": -5,
+                    "y": 4
+                },
+                "size": {
+                    "w": 1,
+                    "h": 1
+                },
+                "texture": "outside",
+                "subtexture": "path_corner_top_right",
+                "category": "ground"
+            },
+            {
+                "position": {
+                    "x": -5,
+                    "y": 3
+                },
+                "size": {
+                    "w": 1,
+                    "h": 1
+                },
+                "texture": "outside",
+                "subtexture": "path_edge_right",
+                "category": "ground"
+            },
+            {
+                "position": {
+                    "x": -5,
+                    "y": 2
+                },
+                "size": {
+                    "w": 1,
+                    "h": 1
+                },
+                "texture": "outside",
+                "subtexture": "path_corner_bottom_right",
+                "category": "ground"
+            },
+            {
+                "position": {
+                    "x": -6,
+                    "y": -4
+                },
+                "size": {
+                    "w": 2,
+                    "h": 2
+                },
+                "tile": {
+                    "x": 2,
+                    "y": 2
+                },
+                "texture": "outside",
+                "subtexture": "tree",
+                "category": "wall"
+            },
+            {
+                "position": {
+                    "x": 5,
+                    "y": -4
+                },
+                "size": {
+                    "w": 4,
+                    "h": 4
+                },
+                "tile": {
+                    "x": 2,
+                    "y": 2
+                },
+                "texture": "outside",
+                "subtexture": "tree",
+                "category": "wall"
+            },
+            {
+                "position": {
+                    "x": -2,
+                    "y": 3
+                },
+                "size": {
+                    "w": 4,
+                    "h": 2
+                },
+                "tile": {
+                    "x": 2,
+                    "y": 2
+                },
+                "texture": "outside",
+                "subtexture": "tree",
+                "category": "wall"
+            },
+            {
+                "position": {
+                    "x": -1,
+                    "y": 2
+                },
+                "size": {
+                    "w": 2,
+                    "h": 2
+                },
+                "tile": {
+                    "x": 2,
+                    "y": 2
+                },
+                "texture": "outside",
+                "subtexture": "tree",
+                "category": "wall"
+            },
+            {
+                "position": {
+                    "x": -9,
+                    "y": -1
+                },
+                "size": {
+                    "w": 3,
+                    "h": 2
+                },
+                "texture": "outside",
+                "subtexture": "bush",
+                "category": "wall"
+            },
+            {
+                "position": {
+                    "x": -10,
+                    "y": 3
+                },
+                "size": {
+                    "w": 2,
+                    "h": 2
+                },
+                "tile": {
+                    "x": 2,
+                    "y": 2
+                },
+                "texture": "outside",
+                "subtexture": "tree",
+                "category": "wall"
+            },
+            {
+                "position": {
+                    "x": -9,
+                    "y": 2
+                },
+                "size": {
+                    "w": 2,
+                    "h": 2
+                },
+                "tile": {
+                    "x": 2,
+                    "y": 2
+                },
+                "texture": "outside",
+                "subtexture": "tree",
+                "category": "wall"
+            }
+        ]
+    }
+}

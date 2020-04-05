@@ -1,0 +1,6 @@
+is_avatar: true
+required_tiles:
+  - standing_back
+  - standing_fwd
+  - standing_left
+  - standing_right

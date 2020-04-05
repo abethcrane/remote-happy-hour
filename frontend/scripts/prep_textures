@@ -1,0 +1,9 @@
+#!/usr/bin/env bash -e
+# Script used to manually build montages of individual textures for ease of loading
+# by WebGL. Currently, this is not run as part of a build, but rather run manually with the results
+# checked into git.
+
+# move into the frontend directory
+cd $(dirname $0)/..
+
+./scripts/prep_textures.py --clean texture_assets/ static/textures data/texture_specs.json

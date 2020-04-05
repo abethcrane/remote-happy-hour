@@ -1,0 +1,7 @@
+is_avatar: false
+is_color_mapped: false
+num_cols: 4
+montage_size: "36x36>"
+strip_name_from_subtexture: true
+# Override if we want to sanity check that certain tile names exist; e.g. posture_names for the avatars
+required_tiles: []
