@@ -173,7 +173,7 @@ def create_app():
                 room_stats[room_id] = room_metadata.num_players()
         return room_stats
 
-    return sio, app
+    return app
 
 
 class RoomMetadata:
