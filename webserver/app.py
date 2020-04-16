@@ -20,7 +20,7 @@ def create_app():
     def index(path):
         return flask.render_template('index.html')
 
-    @app.route('/dev_static/<path:filename>')
+    @app.route('/static/<path:filename>')
     def dev_static(filename):
         return app.send_static_file(filename)
 
@@ -170,7 +170,7 @@ def create_app():
                 room_stats[room_id] = room_metadata.num_players()
         return room_stats
 
-    return app
+    return sio, app
 
 
 class RoomMetadata:
