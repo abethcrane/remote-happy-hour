@@ -3,22 +3,11 @@ const path = require('path');
 const glob = require('glob');
 
 module.exports = {
-  entry: 'js/index.js',
+  entry: './frontend/js/index.js',
   output: {
     filename: 'bundle.js',
-    path: 'static',
+    path: path.join(__dirname, '../../static/dist'),
   },
-  // resolve: {
-  //   modules: [RUNFILES_NODE_MODULES_PATH].concat(
-  //       glob.sync(
-  //           `${RUNFILES_NODE_MODULES_PATH}/**/node_modules`
-  //       )),
-  //   extensions: [".js", ".json", ".jsx", ".css", ".scss"],
-  //   symlinks: false,
-  // },
-  // resolveLoader: {
-  //   modules: [RUNFILES_NODE_MODULES_PATH],
-  // },
   module: {
     rules: [{
       test: /\.html$/,

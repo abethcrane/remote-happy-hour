@@ -11,7 +11,7 @@ def create_app():
         cors_allowed_origins="*"
     )
 
-    app.static_folder = '../frontend/static'
+    app.static_folder = '../static'
 
     rooms = {}
 
@@ -22,10 +22,7 @@ def create_app():
 
     @app.route('/dev_static/<path:filename>')
     def dev_static(filename):
-        if settings['dev_server_url']:
-            return flask.redirect(urllib.parse.urljoin(settings['dev_server_url'], filename))
-        else:
-            return app.send_static_file(filename)
+        return app.send_static_file(filename)
 
     # NB: There's a difference between sio.emit() and emit()
     # The former is used for server-initiated emits

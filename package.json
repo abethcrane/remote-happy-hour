@@ -2,9 +2,13 @@
   "name": "remote_happy_hour",
   "version": "0.1.0",
   "scripts": {
-    "build:dev": "webpack-dev-server --progress -d --watch --config ./config/webpack_dev_server_native.common.js",
-    "build:prod": "webpack --config ./config/webpack.prod.js",
-    "formatAll": "prettier --write js/**/*.js"
+    "build:dev": "webpack-dev-server --progress -d --watch --config ./frontend/config/webpack_dev_server_native.common.js",
+    "build": "webpack --config ./frontend/config/webpack.prod.js",
+    "formatAll": "prettier --write frontend/js/**/*.js"
+  },
+  "engines": {
+    "node": "11.9.x",
+    "yarn": "1.x"
   },
   "devDependencies": {
     "@babel/core": "^7.3.4",
@@ -19,8 +23,6 @@
     "enzyme": "^3.7.0",
     "enzyme-adapter-react-16": "^1.6.0",
     "enzyme-to-json": "^3.3.0",
-    "eslint": "^6.0.1",
-    "eslint-plugin-import": "^2.18.2",
     "jest": "^24.9.0",
     "node-sass": "^4.10.0",
     "prettier": "^2.0.1",
@@ -38,6 +40,7 @@
   "dependencies": {
     "gl-matrix": "^3.1.0",
     "lodash": "^4.17.15",
+    "moment": "^2.24.0",
     "prop-types": "^15.6.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",

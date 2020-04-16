@@ -8,15 +8,6 @@ import {
 import io from 'socket.io-client';
 import moment from 'moment';
 import qs from 'qs';
-import {
-  ActionButton,
-  ContainerFluid,
-  Label,
-  SingleSelect,
-  TextBox,
-} from 'atrium';
-import { Favicon, FlatironLogo } from 'atrium/Logos'; // all icons are available
-import { FlexContainer, FlexItem } from 'atrium/Layout';
 import { startCase } from 'lodash';
 
 import { WebRTC } from '../webRTC';
@@ -410,48 +401,49 @@ class App extends React.PureComponent {
   render() {
     const roomId = this.getRoomId();
 
-    return (
-      <div className="app container full-width">
-        <Favicon />
-        <FlexContainer
-          direction="horizontal"
-          alignItems="center"
-          justifyContent="space-between"
-        >
-          <FlexItem>
-            <FlatironLogo height={80} />
-          </FlexItem>
-          {roomId ? (
-            <FlexItem className="mr4">
-              <h2>{'/' + roomId}</h2>
-            </FlexItem>
-          ) : null}
-          <FlexItem>
-            <ActionButton onClick={this.toggleVideo}>Toggle Video</ActionButton>
-            &nbsp;
-            <ActionButton
-              disabled={this.state.joined || !this.getRoomId()}
-              onClick={this.joinRoom}
-            >
-              Join Room
-            </ActionButton>
-          </FlexItem>
-          {roomId ? this.renderCharacterControls() : null}
-          {!roomId ? this.renderRoomSelect() : null}
-        </FlexContainer>
-        {this.renderPeers()}
-        {roomId && this.state.playerId ? this.renderRoomPanel() : null}
-        <h4 className="center">WASD or arrow keys to move</h4>
-        <h5 className="center">
-          Volume is based on distance apart from other avatars!
-        </h5>
-        {this.renderActiveRooms()}
-        <BackgroundAudioContainer
-          key={this.state.currentLayout}
-          layout={this.state.currentLayout}
-        />
-      </div>
-    );
+    return (<div>Hello world</div>);
+    // return (
+    //   <div className="app container full-width">
+    //     <Favicon />
+    //     <FlexContainer
+    //       direction="horizontal"
+    //       alignItems="center"
+    //       justifyContent="space-between"
+    //     >
+    //       <FlexItem>
+    //         <FlatironLogo height={80} />
+    //       </FlexItem>
+    //       {roomId ? (
+    //         <FlexItem className="mr4">
+    //           <h2>{'/' + roomId}</h2>
+    //         </FlexItem>
+    //       ) : null}
+    //       <FlexItem>
+    //         <ActionButton onClick={this.toggleVideo}>Toggle Video</ActionButton>
+    //         &nbsp;
+    //         <ActionButton
+    //           disabled={this.state.joined || !this.getRoomId()}
+    //           onClick={this.joinRoom}
+    //         >
+    //           Join Room
+    //         </ActionButton>
+    //       </FlexItem>
+    //       {roomId ? this.renderCharacterControls() : null}
+    //       {!roomId ? this.renderRoomSelect() : null}
+    //     </FlexContainer>
+    //     {this.renderPeers()}
+    //     {roomId && this.state.playerId ? this.renderRoomPanel() : null}
+    //     <h4 className="center">WASD or arrow keys to move</h4>
+    //     <h5 className="center">
+    //       Volume is based on distance apart from other avatars!
+    //     </h5>
+    //     {this.renderActiveRooms()}
+    //     <BackgroundAudioContainer
+    //       key={this.state.currentLayout}
+    //       layout={this.state.currentLayout}
+    //     />
+    //   </div>
+    // );
   }
 }
 
