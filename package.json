@@ -2,7 +2,7 @@
   "name": "remote_happy_hour",
   "version": "0.1.0",
   "scripts": {
-    "start": "python main.py",
+    "start": "./scripts/start",
     "dev": "concurrently \"npm:build:dev\" \"npm:start\"",
     "build:dev": "webpack-dev-server --progress -d --watch --config ./frontend/config/webpack_dev_server_native.common.js",
     "build": "webpack --config ./frontend/config/webpack.prod.js",
@@ -45,6 +45,7 @@
     "moment": "^2.24.0",
     "prop-types": "^15.6.2",
     "react": "^16.8.6",
+    "react-bootstrap": "^1.0.0",
     "react-dom": "^16.8.6",
     "react-measure": "^2.3.0",
     "react-router": "^4.3.1",

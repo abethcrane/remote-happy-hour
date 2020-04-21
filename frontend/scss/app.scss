@@ -17,3 +17,21 @@
     text-align: center;
     height: 135px;
 }
+
+// atomic shims
+
+.full-width {
+    width: 100%;
+}
+
+.full-height {
+    height: 100%;
+}
+
+.relative {
+    position: relative;
+}
+
+.absolute {
+    position: absolute;
+}

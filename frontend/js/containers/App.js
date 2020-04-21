@@ -5,6 +5,7 @@ import {
   Switch,
   withRouter,
 } from 'react-router-dom';
+import { Button, Col, Container, Row } from 'react-bootstrap';
 import io from 'socket.io-client';
 import moment from 'moment';
 import qs from 'qs';
@@ -242,7 +243,7 @@ class App extends React.PureComponent {
     return (
       <div className="full-width glPanel p2">
         <HappyHourRoomContainer
-          transparentBackground
+          //transparentBackground
           getRenderModels={this._sceneController.getRenderModels}
           textureSpecs={this._sceneController.getTextureSpecs()}
           moveCharacter={this.onMoveCharacter}
@@ -253,6 +254,7 @@ class App extends React.PureComponent {
   }
 
   renderCharacterControls() {
+    return null;
     const makeItem = (name) =>
       name
         ? {
@@ -306,6 +308,7 @@ class App extends React.PureComponent {
   }
 
   renderRoomSelect() {
+    return null;
     return (
       <FlexContainer direction="horizontal" alignItems="center">
         <FlexItem>
@@ -340,30 +343,32 @@ class App extends React.PureComponent {
 
     return (
       <div id="videos" className="videos">
-        <FlexContainer direction="horizontal" className="full-width scroll-x">
-          {this.state.peers
-            .filter((p) => this._sceneController.hasPlayerId(p.id))
-            .map(({ id, stream }) => (
-              <FlexItem className="mx2" key={id}>
-                <FlexContainer direction="vertical" alignItems="center">
-                  <FlexItem>
-                    <Label>
-                      {startCase(
-                        this._sceneController.getPlayerById(id).displayName
+        <Container className="full-width scroll-x">
+          <Row>
+            {this.state.peers
+              .filter((p) => this._sceneController.hasPlayerId(p.id))
+              .map(({ id, stream }) => (
+                <Col className="mx2" key={id}>
+                  <Container>
+                    <Row>
+                      <span>
+                        {startCase(
+                          this._sceneController.getPlayerById(id).displayName
+                        )}
+                      </span>
+                    </Row>
+                    <Row>
+                      {stream ? (
+                        <Video id={id} width={180} stream={stream} />
+                      ) : (
+                        <p className="missing-video">No video</p>
                       )}
-                    </Label>
-                  </FlexItem>
-                  <FlexItem>
-                    {stream ? (
-                      <Video id={id} width={180} stream={stream} />
-                    ) : (
-                      <p className="missing-video">No video</p>
-                    )}
-                  </FlexItem>
-                </FlexContainer>
-              </FlexItem>
-            ))}
-        </FlexContainer>
+                    </Row>
+                  </Container>
+                </Col>
+              ))}
+          </Row>
+        </Container>
       </div>
     );
   }
@@ -401,10 +406,44 @@ class App extends React.PureComponent {
   render() {
     const roomId = this.getRoomId();
 
-    return (<div>Hello world</div>);
+    return (
+      <Container className="app">
+        <Row>
+          <Col>Happy Hour</Col>
+          {roomId ? (
+            <Col>
+              <h2>{'/' + roomId}</h2>
+            </Col>
+          ) : null}
+          <Col>
+            <Button onClick={this.toggleVideo}>Toggle Video</Button>
+            &nbsp;
+            <Button
+              disabled={this.state.joined || !this.getRoomId()}
+              onClick={this.joinRoom}
+            >
+              Join Room
+            </Button>
+          </Col>
+          {roomId ? <Col>{this.renderCharacterControls()}</Col> : null}
+          {!roomId ? <Col>{this.renderRoomSelect()}</Col> : null}
+        </Row>
+        <Row>{this.renderPeers()}</Row>
+        <Row>
+          {roomId && this.state.playerId ? this.renderRoomPanel() : null}
+        </Row>
+        <Row>
+          <h4 className="center">WASD or arrow keys to move</h4>
+          <h5 className="center">
+            Volume is based on distance apart from other avatars!
+          </h5>
+        </Row>
+        <Row>{this.renderActiveRooms()}</Row>
+      </Container>
+    );
+
     // return (
     //   <div className="app container full-width">
-    //     <Favicon />
     //     <FlexContainer
     //       direction="horizontal"
     //       alignItems="center"
@@ -413,11 +452,6 @@ class App extends React.PureComponent {
     //       <FlexItem>
     //         <FlatironLogo height={80} />
     //       </FlexItem>
-    //       {roomId ? (
-    //         <FlexItem className="mr4">
-    //           <h2>{'/' + roomId}</h2>
-    //         </FlexItem>
-    //       ) : null}
     //       <FlexItem>
     //         <ActionButton onClick={this.toggleVideo}>Toggle Video</ActionButton>
     //         &nbsp;
