@@ -1,0 +1,9 @@
+#!/usr/bin/env bash -e
+
+cd $(dirname $0)/..
+
+gunicorn \
+    -k geventwebsocket.gunicorn.workers.GeventWebSocketWorker \
+    -w 1 \
+    --bind 127.0.0.1:8000 \
+    'webserver.app:create_app()'

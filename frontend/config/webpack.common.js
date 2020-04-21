@@ -5,8 +5,8 @@ const glob = require('glob');
 module.exports = {
   entry: './frontend/js/index.js',
   output: {
-    filename: 'bundle.js',
-    path: path.join(__dirname, '../../static/dist'),
+    filename: 'static/dist/bundle.js',
+    path: path.join(__dirname, '../..'),
   },
   module: {
     rules: [{

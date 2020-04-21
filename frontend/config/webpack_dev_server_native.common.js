@@ -11,7 +11,7 @@ module.exports = merge(common, {
     },
     host: 'localhost',
     port: 9081,
-    contentBase: './static',
+    contentBase: '.',
     headers: {
       'Access-Control-Allow-Origin': '*'
     },
