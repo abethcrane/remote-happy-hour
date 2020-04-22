@@ -374,6 +374,7 @@ class App extends React.PureComponent {
   }
 
   renderActiveRooms() {
+    return null;
     const { activeRooms } = this.state;
     const roomIds = Object.keys(activeRooms);
 
