@@ -6,6 +6,7 @@
     "dev": "concurrently \"npm:build:dev\" \"npm:start\"",
     "build:dev": "webpack-dev-server --progress -d --watch --config ./frontend/config/webpack_dev_server_native.common.js",
     "build": "webpack --config ./frontend/config/webpack.prod.js",
+    "format": "prettier --write",
     "formatAll": "prettier --write frontend/js/**/*.js"
   },
   "engines": {
@@ -41,6 +42,7 @@
   },
   "dependencies": {
     "gl-matrix": "^3.1.0",
+    "husky": "^4.2.5",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "prop-types": "^15.6.2",
