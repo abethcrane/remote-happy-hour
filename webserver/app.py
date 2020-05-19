@@ -1,13 +1,29 @@
 from flask_socketio import SocketIO, emit, join_room, leave_room
-from webserver.settings import settings
+from flask_login import current_user, login_required
+from http import HTTPStatus
+from werkzeug.exceptions import HTTPException
 import flask
+import json
 import traceback
 import urllib.parse
+import yaml
+
+
+from webserver.settings import settings
+from .authentication import AuthenticationManager
+from .services.user import UserService
 
 
 def create_app():
     app = flask.Flask(__name__)
     sio = SocketIO(app, cors_allowed_origins="*")
+
+    # Load users
+    user_service = UserService(settings["user_config_file"])
+
+    app.secret_key = settings["auth_secret_key"]
+    auth_manager = AuthenticationManager(user_service)
+    auth_manager.init_app(app)
 
     app.static_folder = "../static"
 
@@ -21,6 +37,46 @@ def create_app():
     @app.route("/static/<path:filename>")
     def dev_static(filename):
         return app.send_static_file(filename)
+
+    @app.route("/api/login", methods=["POST"])
+    def login():
+        print("login")
+        try:
+            username = flask.request.form["username"]
+            passphrase = flask.request.form["passphrase"]
+        except HTTPException as e:
+            raise APIError("Missing required login parameters", HTTPStatus.BAD_REQUEST)
+
+        try:
+            user = auth_manager.login(username, passphrase)
+        except ValueError as e:
+            raise APIError(e, HTTPStatus.UNAUTHORIZED)
+
+        return json.dumps(
+            {"message": "Successfully logged in.", "user": {"id": user.id, "displayName": user.display_name}}
+        )
+
+    @app.route("/api/logout", methods=["POST"])
+    def logout():
+        auth_manager.logout()
+        return json.dumps({"message": "Logged out."})
+
+    @app.route("/api/me")
+    @login_required
+    def get_me():
+        user = current_user
+        return json.dumps({"user": {"id": user.id, "displayName": user.display_name}})
+
+    @app.errorhandler(APIError)
+    def handle_api_error(error):
+        return json.dumps({"message": error.message}), error.status_code
+
+    if not settings.get("debug"):
+
+        @app.errorhandler(Exception)
+        def handle_generic_error(err):
+            app.logger.exception(err)
+            return handle_api_error(APIError("Server encountered unknown error.", HTTPStatus.INTERNAL_SERVER_ERROR))
 
     # NB: There's a difference between sio.emit() and emit()
     # The former is used for server-initiated emits
@@ -170,6 +226,12 @@ def create_app():
         return room_stats
 
     return app
+
+
+class APIError(Exception):
+    def __init__(self, message, status_code):
+        self.message = str(message)
+        self.status_code = status_code
 
 
 class RoomMetadata:

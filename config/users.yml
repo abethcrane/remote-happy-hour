@@ -1,0 +1,7 @@
+users:
+  - id: admin
+    display_name: Admin
+    password_hash: d23d764587a5cdcae4018de1b137373bc18ad592768e211a73659d5b87a82f29
+  - id: guest
+    display_name: Guest
+    password_hash: 66596c80e601dd42ccaef6bb25258f9238f00856d42296bd4c570f41c545d147
