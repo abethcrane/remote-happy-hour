@@ -6,4 +6,5 @@ settings = {
     "dev_server_url": None,  #'http://localhost:9081',
     "port": 8000,
     "user_config_file": "config/users.yml",
+    "max_players_per_room": 20, #It was 5 because it got laggy, we're trying 20
 }

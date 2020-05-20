@@ -421,7 +421,7 @@ class App extends React.PureComponent {
             &nbsp;
             <Button
               disabled={this.state.joined || !this.getRoomId()}
-              onClick={this.joinRoom}
+              onClick={() => this.joinRoom(this.nextRoomId)}
             >
               Join Room
             </Button>

@@ -8,11 +8,9 @@ import traceback
 import urllib.parse
 import yaml
 
-
 from webserver.settings import settings
 from .authentication import AuthenticationManager
 from .services.user import UserService
-
 
 def create_app():
     app = flask.Flask(__name__)
@@ -105,6 +103,7 @@ def create_app():
 
     @sio.on("join")
     def join(data):
+        print("START OF JOIN")
         sid = flask.request.sid
         room_id = data["room"]
 
@@ -114,7 +113,7 @@ def create_app():
         room_metadata = rooms[room_id]
 
         # If the player's not already in this room, and the room has space for the player
-        if room_metadata.get_player(sid) is None and room_metadata.num_players() < 5:
+        if room_metadata.get_player(sid) is None and room_metadata.num_players() < settings["max_players_per_room"]:
             # Get the player data from their own 'room' now that they're in a shared one
             player_data = rooms[sid].get_player(sid)
             # Now add them to the room
