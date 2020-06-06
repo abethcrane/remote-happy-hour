@@ -1,0 +1,2 @@
+location = "eastus"
+prefix = "kanto"
