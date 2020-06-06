@@ -174,7 +174,7 @@ resource "azurerm_linux_virtual_machine" "main" {
       }
 
       inline = [
-        "sudo bash turnerserver.sh ${var.turn_username} ${var.turn_password}"
+        "sudo bash turnserver.sh ${var.turn_username} ${var.turn_password}"
       ]
   }
 
