@@ -156,7 +156,7 @@ resource "azurerm_linux_virtual_machine" "main" {
   provisioner "file" {
       connection {
           type     = "ssh"
-          host     = azurerm_public_ip.publicip.ip_address
+          host     = azurerm_public_ip.main.ip_address
           user     = var.admin_username
           password = var.admin_password
       }
@@ -168,7 +168,7 @@ resource "azurerm_linux_virtual_machine" "main" {
   provisioner "remote-exec" {
       connection {
           type     = "ssh"
-          host     = azurerm_public_ip.publicip.ip_address
+          host     = azurerm_public_ip.main.ip_address
           user     = var.admin_username
           password = var.admin_password
       }
