@@ -29,7 +29,7 @@ resource "azurerm_public_ip" "main" {
   name                = "${var.prefix}-publicip"
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
-  allocation_method   = "Dynamic"
+  allocation_method   = "Static"
 }
 
 # Create Network Security Group
@@ -151,4 +151,31 @@ resource "azurerm_linux_virtual_machine" "main" {
       username       = var.admin_username
       public_key     = tls_private_key.ssh.public_key_openssh
   }
+
+  # Set up the turn server
+  provisioner "file" {
+      connection {
+          type     = "ssh"
+          host     = azurerm_public_ip.publicip.ip_address
+          user     = var.admin_username
+          password = var.admin_password
+      }
+
+      source      = "turnserver.sh"
+      destination = "turnserver.sh"
+  }
+
+  provisioner "remote-exec" {
+      connection {
+          type     = "ssh"
+          host     = azurerm_public_ip.publicip.ip_address
+          user     = var.admin_username
+          password = var.admin_password
+      }
+
+      inline = [
+        "sudo bash turnerserver.sh ${var.turn_username} ${var.turn_password}"
+      ]
+  }
+
 }
