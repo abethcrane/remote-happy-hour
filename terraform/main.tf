@@ -111,7 +111,12 @@ resource "tls_private_key" "ssh" {
   algorithm = "RSA"
   rsa_bits = 4096
 }
+
 output "tls_private_key" { value = tls_private_key.ssh.private_key_pem }
+
+output "ip" {
+  value = azurerm_public_ip.main.ip_address
+}
 
 # Create a Linux virtual machine
 resource "azurerm_linux_virtual_machine" "main" {
