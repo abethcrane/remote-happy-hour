@@ -2,3 +2,4 @@ node_modules/
 venv/
 *.pyc
 static/dist
+terraform/secrets.tfvars
