@@ -41,6 +41,8 @@
     "webpack-merge": "^4.1.4"
   },
   "dependencies": {
+    "axios": "^0.19.2",
+    "formik": "^2.1.4",
     "gl-matrix": "^3.1.0",
     "husky": "^4.2.5",
     "lodash": "^4.17.15",

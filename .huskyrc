@@ -1,5 +1,5 @@
 {
   "hooks": {
-    "pre-commit": "git diff HEAD --name-only | grep \".js$\" | xargs yarn format && source venv/bin/activate && git diff HEAD --name-only | grep \".py$\" | xargs black -l 120"
+    "pre-commit": "git diff HEAD --name-only | grep \".js$|.scss$\" | xargs yarn format && source venv/bin/activate && git diff HEAD --name-only | grep \".py$\" | xargs black -l 120"
   }
 } 

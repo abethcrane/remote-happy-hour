@@ -1,5 +1,6 @@
-from flask_socketio import SocketIO, emit, join_room, leave_room
 from flask_login import current_user, login_required
+from flask_socketio import SocketIO, emit, join_room, leave_room
+from functools import wraps
 from http import HTTPStatus
 from werkzeug.exceptions import HTTPException
 import flask
@@ -41,29 +42,25 @@ def create_app():
         print("login")
         try:
             username = flask.request.form["username"]
-            passphrase = flask.request.form["passphrase"]
+            password = flask.request.form["password"]
         except HTTPException as e:
             raise APIError("Missing required login parameters", HTTPStatus.BAD_REQUEST)
 
         try:
-            user = auth_manager.login(username, passphrase)
+            user = auth_manager.login(username, password)
         except ValueError as e:
             raise APIError(e, HTTPStatus.UNAUTHORIZED)
 
-        return json.dumps(
-            {"message": "Successfully logged in.", "user": {"id": user.id, "displayName": user.display_name}}
-        )
+        return json.dumps({"message": "Successfully logged in.", "user": user_to_json(user)})
 
     @app.route("/api/logout", methods=["POST"])
     def logout():
         auth_manager.logout()
-        return json.dumps({"message": "Logged out."})
+        return json.dumps({"message": "Logged out.", "user": None})
 
     @app.route("/api/me")
-    @login_required
     def get_me():
-        user = current_user
-        return json.dumps({"user": {"id": user.id, "displayName": user.display_name}})
+        return json.dumps({"user": user_to_json(current_user)})
 
     @app.errorhandler(APIError)
     def handle_api_error(error):
@@ -231,6 +228,23 @@ class APIError(Exception):
     def __init__(self, message, status_code):
         self.message = str(message)
         self.status_code = status_code
+
+
+def api_login_required(handler):
+    @wraps(handler)
+    def wrapper(*args, **kwargs):
+        if not current_user.is_authenticated:
+            raise APIError("Login required", HTTPStatus.UNAUTHORIZED)
+        return handler(*args, **kwargs)
+
+    return wrapper
+
+
+def user_to_json(user):
+    if user.is_authenticated:
+        return {"id": user.id, "displayName": user.display_name}
+    else:
+        return None
 
 
 class RoomMetadata:

@@ -1,37 +1,85 @@
+// Variables
+
+$header-height: 90px;
+
+// App-specific styles
+
 .app {
-    margin: 0px;
-    height: 100vh;
+  height: 100vh;
+  margin: 0px;
 }
 
 .roomCanvas {
-    top: 0%;
-    left: 0%;
+  left: 0%;
+  top: 0%;
 }
 
 .glPanel {
-    height: 60vh;
+  height: 60vh;
 }
 
 .missing-video {
-    width: 180px;
-    text-align: center;
-    height: 135px;
+  height: 135px;
+  text-align: center;
+  width: 180px;
+}
+
+.app-header {
+  background: white;
+  height: $header-height;
+  position: fixed;
+  top: 0px;
+  width: 100%;
+}
+
+.app-body {
+  position: relative;
+  top: $header-height;
 }
 
 // atomic shims
 
 .full-width {
-    width: 100%;
+  width: 100%;
 }
 
 .full-height {
-    height: 100%;
+  height: 100%;
 }
 
 .relative {
-    position: relative;
+  position: relative;
 }
 
 .absolute {
-    position: absolute;
+  position: absolute;
+}
+
+.flex-horizontal-center {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-vertical-center {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.justify-space-between {
+  justify-content: space-between;
+}
+
+.p2 {
+  padding: 2em;
+}
+
+.px2 {
+  padding-left: 2em;
+  padding-right: 2em;
+}
+
+.m2 {
+  margin: 2em;
 }
