@@ -55,6 +55,11 @@ $header-font-size: 22px;
   }
 }
 
+// CJ: I don't know why this is necessary
+a {
+  cursor: pointer;
+}
+
 // atomic shims
 
 .full-width {
