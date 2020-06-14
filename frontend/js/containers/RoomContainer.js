@@ -16,7 +16,7 @@ import HappyHourRoomContainer from './HappyHourRoomContainer';
 import RoomsPanel from '../components/RoomsPanel';
 import SceneController from '../controllers/SceneController';
 import TexturesManager from '../TexturesManager';
-import Video from '../components/Video';
+import VideosPanel from '../components/VideosPanel';
 import { LayoutsManager } from '../LayoutsManager';
 import { WebRTC } from '../webRTC';
 
@@ -196,6 +196,18 @@ class RoomContainer extends React.PureComponent {
     this._serverConnection = null;
   }
 
+  getVisiblePeerObjects() {
+    const { peers } = this.state;
+
+    return (peers || [])
+      .filter(({ id }) => this._sceneController.hasPlayerId(id))
+      .map(({ id, stream }) => ({
+        id,
+        stream,
+        ...this._sceneController.getPlayerById(id),
+      }));
+  }
+
   onPeersChanged(peers) {
     this.setState({ peers });
   }
@@ -315,75 +327,10 @@ class RoomContainer extends React.PureComponent {
     );
   }
 
-  renderRoomSelect() {
-    return null;
-    return (
-      <FlexContainer direction="horizontal" alignItems="center">
-        <FlexItem>
-          <Label>Go to room:</Label>
-        </FlexItem>
-        <FlexItem className="pt2 ml2">
-          <TextBox
-            value={this.state.nextRoomId}
-            onChange={(nextRoomId) => {
-              this.setState({ nextRoomId });
-            }}
-          />
-        </FlexItem>
-        <FlexItem className="ml2">
-          <ActionButton
-            disabled={
-              !this.state.nextRoomId || this.state.nextRoomId.length === 0
-            }
-            onClick={() => this.joinRoom(this.state.nextRoomId)}
-          >
-            GO
-          </ActionButton>
-        </FlexItem>
-      </FlexContainer>
-    );
-  }
-
-  renderPeers() {
-    if (this.state.peers === null) {
-      return null;
-    }
-
-    return (
-      <div id="videos" className="videos">
-        <Container className="full-width scroll-x">
-          <Row>
-            {this.state.peers
-              .filter((p) => this._sceneController.hasPlayerId(p.id))
-              .map(({ id, stream }) => (
-                <Col className="mx2" key={id}>
-                  <Container>
-                    <Row>
-                      <span>
-                        {startCase(
-                          this._sceneController.getPlayerById(id).displayName
-                        )}
-                      </span>
-                    </Row>
-                    <Row>
-                      {stream ? (
-                        <Video id={id} width={180} stream={stream} />
-                      ) : (
-                        <p className="missing-video">No video</p>
-                      )}
-                    </Row>
-                  </Container>
-                </Col>
-              ))}
-          </Row>
-        </Container>
-      </div>
-    );
-  }
-
   render() {
     const roomId = this.getRoomId();
     const { activeRooms } = this.state;
+    const peers = this.getVisiblePeerObjects();
 
     return (
       <Container className="app">
@@ -392,7 +339,9 @@ class RoomContainer extends React.PureComponent {
           currentRoom={roomId}
           onSelectRoom={(room) => this.onSelectRoom(room)}
         />
-        <Row>{this.renderPeers()}</Row>
+        {peers.length && (
+          <VideosPanel peers={peers} onToggleVideo={this.toggleVideo} />
+        )}
         <Row>
           {roomId && this.state.playerId ? this.renderRoomPanel() : null}
         </Row>
@@ -404,43 +353,6 @@ class RoomContainer extends React.PureComponent {
         </Row>
       </Container>
     );
-
-    // return (
-    //   <div className="app container full-width">
-    //     <FlexContainer
-    //       direction="horizontal"
-    //       alignItems="center"
-    //       justifyContent="space-between"
-    //     >
-    //       <FlexItem>
-    //         <FlatironLogo height={80} />
-    //       </FlexItem>
-    //       <FlexItem>
-    //         <ActionButton onClick={this.toggleVideo}>Toggle Video</ActionButton>
-    //         &nbsp;
-    //         <ActionButton
-    //           disabled={this.state.joined || !this.getRoomId()}
-    //           onClick={this.joinRoom}
-    //         >
-    //           Join Room
-    //         </ActionButton>
-    //       </FlexItem>
-    //       {roomId ? this.renderCharacterControls() : null}
-    //       {!roomId ? this.renderRoomSelect() : null}
-    //     </FlexContainer>
-    //     {this.renderPeers()}
-    //     {roomId && this.state.playerId ? this.renderRoomPanel() : null}
-    //     <h4 className="center">WASD or arrow keys to move</h4>
-    //     <h5 className="center">
-    //       Volume is based on distance apart from other avatars!
-    //     </h5>
-    //     {this.renderActiveRooms()}
-    //     <BackgroundAudioContainer
-    //       key={this.state.currentLayout}
-    //       layout={this.state.currentLayout}
-    //     />
-    //   </div>
-    // );
   }
 }
 

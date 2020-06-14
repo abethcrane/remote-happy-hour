@@ -17,10 +17,10 @@ function RoomTile({ id, count, onSelectRoom }) {
 
 function RoomsPanel({ activeRooms, currentRoom, onSelectRoom }) {
   const header = currentRoom && (
-    <Row className="font-size-header">
+    <div className="font-size-header">
       <span>Room</span>
       <span className="bold px1">{capitalize(currentRoom)}</span>
-    </Row>
+    </div>
   );
 
   const joinRoomSection = activeRooms.length ? (
