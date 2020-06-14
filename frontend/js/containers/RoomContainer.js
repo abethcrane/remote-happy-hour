@@ -11,13 +11,14 @@ import moment from 'moment';
 import qs from 'qs';
 import { startCase } from 'lodash';
 
-import { WebRTC } from '../webRTC';
-import TexturesManager from '../TexturesManager';
-import { LayoutsManager } from '../LayoutsManager';
-import HappyHourRoomContainer from './HappyHourRoomContainer';
 import BackgroundAudioContainer from './BackgroundAudioContainer';
+import HappyHourRoomContainer from './HappyHourRoomContainer';
+import RoomsPanel from '../components/RoomsPanel';
 import SceneController from '../controllers/SceneController';
+import TexturesManager from '../TexturesManager';
 import Video from '../components/Video';
+import { LayoutsManager } from '../LayoutsManager';
+import { WebRTC } from '../webRTC';
 
 class RoomContainer extends React.PureComponent {
   constructor(props) {
@@ -143,6 +144,10 @@ class RoomContainer extends React.PureComponent {
         room: this._serverConnection.id,
       });
       this.setState({ playerId: this._serverConnection.id, joined: false });
+
+      if (this.getRoomId()) {
+        this.joinRoom();
+      }
     });
 
     this._serverConnection.on('player_update', (data) => {
@@ -151,8 +156,7 @@ class RoomContainer extends React.PureComponent {
     });
 
     this._serverConnection.on('room_update', (data) => {
-      console.log('got a room_update from server');
-      console.log(data.activeRooms);
+      console.log('room update', data);
 
       this.setState({ activeRooms: data.activeRooms });
       // data = roomName and numPlayers
@@ -213,6 +217,11 @@ class RoomContainer extends React.PureComponent {
         }
       );
     }
+  }
+
+  onSelectRoom(room) {
+    const { history } = this.props;
+    history.push(`/${room}`);
   }
 
   onUpdateCharacter(params) {
@@ -372,42 +381,17 @@ class RoomContainer extends React.PureComponent {
     );
   }
 
-  renderActiveRooms() {
-    return null;
-    const { activeRooms } = this.state;
-    const roomIds = Object.keys(activeRooms);
-
-    if (roomIds.length == 0) {
-      return <h4>No active rooms - be the first to start one!</h4>;
-    }
-
-    return (
-      <div>
-        <h3>Active Rooms</h3>
-        <h4>Click to join</h4>
-        <ContainerFluid>
-          {roomIds.map((id) => (
-            <ul key={'activeRoom-' + id}>
-              <a
-                id={'joinRoomLink-' + id}
-                href="#"
-                onClick={() => this.joinRoom(id)}
-              >
-                {id}
-              </a>
-              : {activeRooms[id]} friend{activeRooms[id] > 1 ? 's' : ''}
-            </ul>
-          ))}
-        </ContainerFluid>
-      </div>
-    );
-  }
-
   render() {
     const roomId = this.getRoomId();
+    const { activeRooms } = this.state;
 
     return (
       <Container className="app">
+        <RoomsPanel
+          activeRooms={activeRooms}
+          currentRoom={roomId}
+          onSelectRoom={(room) => this.onSelectRoom(room)}
+        />
         <Row>{this.renderPeers()}</Row>
         <Row>
           {roomId && this.state.playerId ? this.renderRoomPanel() : null}
@@ -418,7 +402,6 @@ class RoomContainer extends React.PureComponent {
             Volume is based on distance apart from other avatars!
           </h5>
         </Row>
-        <Row>{this.renderActiveRooms()}</Row>
       </Container>
     );
 

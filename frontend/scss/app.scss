@@ -1,6 +1,7 @@
 // Variables
 
 $header-height: 90px;
+$header-font-size: 22px;
 
 // App-specific styles
 
@@ -37,6 +38,23 @@ $header-height: 90px;
   top: $header-height;
 }
 
+.room-tile {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin: 2em;
+  width: 60px;
+}
+
+.panel {
+  border: 1px #ccc solid;
+  padding: 1em;
+
+  .row {
+    margin: 0px;
+  }
+}
+
 // atomic shims
 
 .full-width {
@@ -71,6 +89,14 @@ $header-height: 90px;
   justify-content: space-between;
 }
 
+.justify-end {
+  justify-content: flex-end;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
 .p2 {
   padding: 2em;
 }
@@ -80,6 +106,19 @@ $header-height: 90px;
   padding-right: 2em;
 }
 
+.px1 {
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
 .m2 {
   margin: 2em;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.font-size-header {
+  font-size: $header-font-size;
 }

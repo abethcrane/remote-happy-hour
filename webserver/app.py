@@ -13,6 +13,7 @@ from webserver.settings import settings
 from .authentication import AuthenticationManager
 from .services.user import UserService
 
+
 def create_app():
     app = flask.Flask(__name__)
     sio = SocketIO(app, cors_allowed_origins="*")
@@ -214,12 +215,11 @@ def create_app():
             emit("bye", player["id"], room=sid)
 
     def get_active_rooms_response():
-        print("Getting active rooms")
-        room_stats = {}
-        for room_id, room_metadata in rooms.items():
-            if room_metadata.is_public():
-                room_stats[room_id] = room_metadata.num_players()
-        return room_stats
+        return [
+            dict(id=room_id, count=metadata.num_players())
+            for room_id, metadata in rooms.items()
+            if metadata.is_public()
+        ]
 
     return app
 

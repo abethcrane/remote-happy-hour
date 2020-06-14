@@ -42,7 +42,7 @@ class LoginContainer extends React.PureComponent {
             password: '',
           }}
         >
-          {({ handleSubmit, handleChange, handleBlur, values }) => (
+          {({ handleSubmit, handleChange, values }) => (
             <Form onSubmit={handleSubmit} className="flex-vertical-center">
               <div className="flex-horizontal-center">
                 <Form.Label className="px2">Password</Form.Label>

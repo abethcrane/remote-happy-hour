@@ -48,9 +48,7 @@ class App extends React.PureComponent {
           <h2>Happy Hour</h2>
         </div>
         <div>
-          {currentUser && (
-            <span onClick={() => this.handleLogout()}>Logout</span>
-          )}
+          {currentUser && <a onClick={() => this.handleLogout()}>Logout</a>}
         </div>
       </div>
     );
