@@ -339,7 +339,7 @@ class RoomContainer extends React.PureComponent {
           currentRoom={roomId}
           onSelectRoom={(room) => this.onSelectRoom(room)}
         />
-        {peers.length && (
+        {!!peers.length && (
           <VideosPanel peers={peers} onToggleVideo={this.toggleVideo} />
         )}
         <Row>
