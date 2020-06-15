@@ -122,6 +122,8 @@ class RoomContainer extends React.PureComponent {
   }
 
   startConnection() {
+    const { turnCreds } = this.props;
+
     this._serverConnection = io.connect();
     this._serverConnection.on('connect', () => {
       console.log('CLIENT CONNECTED', this._serverConnection.id);
@@ -130,7 +132,8 @@ class RoomContainer extends React.PureComponent {
         this._serverConnection.id,
         this.getDisplayName(),
         this.onPeersChanged,
-        this.onJoinedRoom
+        this.onJoinedRoom,
+        turnCreds,
       );
       this.webRTC.SetUpSockets(this._serverConnection);
 

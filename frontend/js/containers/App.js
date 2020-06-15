@@ -18,13 +18,14 @@ class App extends React.PureComponent {
 
     this.state = {
       currentUser: null,
+      turnCreds: null,
     };
   }
 
   componentDidMount() {
     api
       .get('/api/me')
-      .then((result) => this.setState({ currentUser: result.user }))
+      .then((result) => this.setState({ currentUser: result.user, turnCreds: result.turnCreds }))
       .catch((error) => console.log('Error', error));
   }
 
@@ -35,7 +36,7 @@ class App extends React.PureComponent {
   handleLogout() {
     api
       .post('/api/logout')
-      .then((result) => this.setState({ currentUser: result.user }))
+      .then((result) => this.setState({ currentUser: result.user, turnCreds: null}))
       .catch(() => {});
   }
 
@@ -55,12 +56,15 @@ class App extends React.PureComponent {
   }
 
   renderBody() {
-    const { currentUser } = this.state;
+    const { currentUser, turnCreds } = this.state;
 
     return (
       <div className="app-body px2">
         {currentUser ? (
-          <RoomContainer {...this.props} />
+          <RoomContainer
+            turnCreds = {turnCreds}
+            {...this.props}
+          />
         ) : (
           <LoginContainer
             updateCurrentUser={(user) => this.updateCurrentUser(user)}

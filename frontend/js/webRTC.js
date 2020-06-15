@@ -1,5 +1,5 @@
 // Heavily borrowed from https://www.dmcinfo.com/latest-thinking/blog/id/9852/multi-user-video-chat-with-webrtc
-export const WebRTC = (id, displayName, onPeersChanged, onSuccessfulJoin) => {
+export const WebRTC = (id, displayName, onPeersChanged, onSuccessfulJoin, turnCreds) => {
     var localSid = id;
     var localDisplayName = displayName;
     var roomId;
@@ -12,7 +12,12 @@ export const WebRTC = (id, displayName, onPeersChanged, onSuccessfulJoin) => {
 
     var peerConnectionConfig = {
         'iceServers': [
-            { 'urls': 'stun:d-mhh-main-38:3478' }
+            { 'urls': 'stun:d-mhh-main-38:3478' },
+            {
+              'urls': turnCreds.url,
+              'username': turnCreds.username,
+              'credential': turnCreds.pass,
+            },
         ]
     };
 

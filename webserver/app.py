@@ -61,7 +61,7 @@ def create_app():
 
     @app.route("/api/me")
     def get_me():
-        return json.dumps({"user": user_to_json(current_user)})
+        return json.dumps({"user": user_to_json(current_user), "turnCreds": {"url": settings.get("turn_creds_url"), "username": settings.get("turn_creds_username"), "pass": settings.get("turn_creds_pass") } })
 
     @app.errorhandler(APIError)
     def handle_api_error(error):
