@@ -190,13 +190,13 @@ class HappyHourRoomController extends React.Component {
 
     this._texIds = this.props.textureSpecs.map(() => ({}));
     this.props.textureSpecs.forEach((texInfo, idx) => {
-      loadTexture(gl, texInfo.path, (id, width, height) => {
-        this._texIds[idx] = {
-          id,
-          width,
-          height,
-        };
-      });
+      loadTexture(gl, texInfo.path)
+        .then((info) => {
+          this._texIds[idx] = info;
+        })
+        .catch(() => {
+          console.warn(`Error loading texture ${texInfo.path}`);
+        });
     });
   }
 
