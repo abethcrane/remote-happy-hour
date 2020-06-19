@@ -17,7 +17,6 @@ class SceneController {
   }
 
   setLayout(colliders) {
-    console.log('setLayout', colliders);
     this._colliders = cloneDeep(colliders);
 
     const texAndSubtexExist = (texture, subtexture) => {

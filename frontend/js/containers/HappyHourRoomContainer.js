@@ -191,7 +191,6 @@ class HappyHourRoomController extends React.Component {
     this._texIds = this.props.textureSpecs.map(() => ({}));
     this.props.textureSpecs.forEach((texInfo, idx) => {
       loadTexture(gl, texInfo.path, (id, width, height) => {
-        console.log(`Loaded texture: ${texInfo.path}`, width, height);
         this._texIds[idx] = {
           id,
           width,
@@ -316,6 +315,9 @@ class HappyHourRoomController extends React.Component {
     // Cheat in our texture by this many pixels b/c we're getting seams
     const margin = 1;
     const idx = this.getTexIndex(texture);
+    if (idx < 0) {
+      throw Error(`No texture found matching ${texture}.`);
+    }
     const spec = this.props.textureSpecs[idx];
 
     const dsdp = 1.0 / this._texIds[idx].width;
