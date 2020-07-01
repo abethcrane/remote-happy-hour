@@ -330,6 +330,7 @@ export const WebRTC = (id, displayName, onPeersChanged, onSuccessfulJoin, turnCr
                 return {
                     id: peerId,
                     stream,
+                    local: false,
                     gotRemoteVideoStream,
                 };
             })

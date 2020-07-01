@@ -6,7 +6,13 @@ import { startCase } from 'lodash';
 import Panel from './Panel';
 import Video from './Video';
 
-function VideoTile({ id, stream, displayName }) {
+function VideoTile({ id, stream, displayName, local }) {
+  var className = 'remote-stream';
+  if (local)
+  {
+    className = 'local-stream';
+  }
+
   return (
     <div className="flex-vertical-center">
       <div>
@@ -14,7 +20,7 @@ function VideoTile({ id, stream, displayName }) {
       </div>
       <div>
         {stream ? (
-          <Video id={id} width={180} stream={stream} />
+          <Video id={id} width={180} stream={stream} className={className}/>
         ) : (
           <p className="missing-video">No video</p>
         )}

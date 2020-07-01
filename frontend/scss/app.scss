@@ -127,3 +127,7 @@ a {
 .font-size-header {
   font-size: $header-font-size;
 }
+
+.local-stream {
+    transform: scale(-1, 1);
+}

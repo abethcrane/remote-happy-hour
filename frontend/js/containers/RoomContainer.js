@@ -181,7 +181,7 @@ class RoomContainer extends React.PureComponent {
     }
     try {
       this.webRTC.JoinRoom(roomId, this.getDisplayName());
-      setInterval(this.callUpdateGain, 30); // or whatever step is reasonable
+      setInterval(this.callUpdateGain, 3000); // or whatever step is reasonable
     } catch (e) {
       console.log('Caught error while setting up RTC', e);
     }
@@ -204,9 +204,10 @@ class RoomContainer extends React.PureComponent {
 
     return (peers || [])
       .filter(({ id }) => this._sceneController.hasPlayerId(id))
-      .map(({ id, stream }) => ({
+      .map(({ id, stream, local }) => ({
         id,
         stream,
+        local,
         ...this._sceneController.getPlayerById(id),
       }));
   }
