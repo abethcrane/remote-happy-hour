@@ -6,20 +6,20 @@ import { capitalize, sortBy, toPairs } from 'lodash';
 
 import Panel from './Panel';
 
-function RoomTile({ id, count, onSelectRoom }) {
+function RoomTile({ room_id, num_players, onSelectRoom }) {
   return (
-    <a onClick={() => onSelectRoom(id)} className="room-tile">
-      <span>{id}</span>
-      <span>{count}</span>
+    <a onClick={() => onSelectRoom(room_id)} className="room-tile">
+      <span>{room_id}</span>
+      <span>{num_players}</span>
     </a>
   );
 }
 
 function RoomsPanel({ activeRooms, currentRoom, onSelectRoom }) {
-  const header = currentRoom && (
+  const header = currentRoom && currentRoom.is_public && (
     <div className="font-size-header">
       <span>Room</span>
-      <span className="bold px1">{capitalize(currentRoom)}</span>
+      <span className="bold px1">{capitalize(currentRoom.room_id)}</span>
     </div>
   );
 
@@ -31,7 +31,7 @@ function RoomsPanel({ activeRooms, currentRoom, onSelectRoom }) {
           <div className="flex-horizontal-center flex-wrap">
             {activeRooms.map((room, idx) => (
               <RoomTile
-                key={room.id + idx}
+                key={room.room_id + idx}
                 onSelectRoom={onSelectRoom}
                 {...room}
               />
@@ -42,7 +42,10 @@ function RoomsPanel({ activeRooms, currentRoom, onSelectRoom }) {
     </Row>
   ) : null;
 
-  const firstRoom = !(currentRoom || activeRooms.length);
+  const firstRoom = !(
+    (currentRoom && currentRoom.is_public) ||
+    activeRooms.length
+  );
 
   const createRoomFooter = (
     <Row className="flex-horizontal-center justify-space-be">

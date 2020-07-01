@@ -35,6 +35,7 @@ class RoomContainer extends React.PureComponent {
       currentUser: null,
       playerId: null,
       nextRoomId: '',
+      joinedRoomId: null,
       joined: false,
       peers: null,
       players: [],
@@ -56,10 +57,11 @@ class RoomContainer extends React.PureComponent {
     this.onPeersChanged = this.onPeersChanged.bind(this);
     this.onUpdateCharacter = this.onUpdateCharacter.bind(this);
     this.onSelectLayout = this.onSelectLayout.bind(this);
-    this.onJoinedRoom = this.onJoinedRoom.bind(this);
+    this.cleanupComponent = this.cleanupComponent.bind(this);
   }
 
   componentDidMount() {
+    window.addEventListener('beforeunload', this.cleanupComponent);
     this.startConnection();
   }
 
@@ -70,21 +72,14 @@ class RoomContainer extends React.PureComponent {
           prevProps
         )} to ${this.getRoomId()}`
       );
-      if (this.getRoomId(prevProps)) {
-        // Currently, we force the browser to reload if the user is leaving a room
-        window.location.reload();
-      } else {
-        this.startConnection();
-      }
+      this.joinRoom();
     }
   }
 
   getRoomId(props) {
-    if (this.state.joined) {
-      return this.state.currentRoom;
-    }
-
-    return (props || this.props).match.params.roomId;
+    const urlRoom = (props || this.props).match.params.roomId;
+    const personal = this._serverConnection && this._serverConnection.id;
+    return urlRoom || personal || null;
   }
 
   getDisplayName(props) {
@@ -132,25 +127,29 @@ class RoomContainer extends React.PureComponent {
         this._serverConnection.id,
         this.getDisplayName(),
         this.onPeersChanged,
-        this.onJoinedRoom,
-        turnCreds,
+        turnCreds
       );
       this.webRTC.SetUpSockets(this._serverConnection);
 
-      // If we're reconnecting, attempt to send our preexisting player's info while joining
-      const player = this.state.playerId
-        ? this._sceneController.getPlayerById(this.state.playerId)
-        : createDefaultPlayer(this.getDisplayName(), this.getIconName());
-      // The server requires that the player first send positions to a room w/ their own sid
-      this._serverConnection.emit('player_update', {
-        player,
-        room: this._serverConnection.id,
+      this.setState({ playerId: this._serverConnection.id }, () => {
+        if (this.getRoomId()) {
+          this.joinRoom();
+        }
       });
-      this.setState({ playerId: this._serverConnection.id, joined: false });
+    });
 
-      if (this.getRoomId()) {
-        this.joinRoom();
-      }
+    this._serverConnection.on('join_success', (data) => {
+      console.log('join_success', data);
+      this.setState({
+        joinedRoomId: data.room.room_id,
+        currentRoom: data.room,
+      });
+      this.webRTC.onJoinedRoom(data.room.room_id);
+    });
+
+    this._serverConnection.on('join_failure', (data) => {
+      console.log('join_failure', data);
+      alert('Could not join room');
     });
 
     this._serverConnection.on('player_update', (data) => {
@@ -161,7 +160,7 @@ class RoomContainer extends React.PureComponent {
     this._serverConnection.on('room_update', (data) => {
       console.log('room update', data);
 
-      this.setState({ activeRooms: data.activeRooms });
+      this.setState({ activeRooms: data.active_rooms });
       // data = roomName and numPlayers
       // and we want to just update our list down the bottom!!
     });
@@ -175,16 +174,29 @@ class RoomContainer extends React.PureComponent {
     }
   }
 
-  joinRoom(roomId) {
-    if (!roomId) {
-      roomId = this.getRoomId();
+  joinRoom() {
+    if (!this._serverConnection) {
+      throw Error('Cannot call joinRoom without serverConnection');
     }
-    try {
-      this.webRTC.JoinRoom(roomId, this.getDisplayName());
-      setInterval(this.callUpdateGain, 3000); // or whatever step is reasonable
-    } catch (e) {
-      console.log('Caught error while setting up RTC', e);
-    }
+    const room = this.getRoomId();
+    this.setState(
+      {
+        joinedRoomId: null,
+        currentRoom: null,
+      },
+      () => {
+        const { playerId } = this.state.playerId;
+        const player =
+          playerId && this._sceneController.hasPlayerId(playerId)
+            ? this._sceneController.getPlayerById(playerId)
+            : createDefaultPlayer(
+                this._serverConnection.id,
+                this.getDisplayName(),
+                this.getIconName()
+              );
+        this._serverConnection.emit('join', { player, room });
+      }
+    );
   }
 
   callUpdateGain() {
@@ -194,9 +206,14 @@ class RoomContainer extends React.PureComponent {
     );
   }
 
-  componentWillUnmount() {
+  cleanupComponent() {
     this._serverConnection.disconnect();
     this._serverConnection = null;
+  }
+
+  componentWillUnmount() {
+    this.cleanupComponent();
+    window.removeEventListener('beforeunload', this.cleanupComponent);
   }
 
   getVisiblePeerObjects() {
@@ -216,10 +233,6 @@ class RoomContainer extends React.PureComponent {
     this.setState({ peers });
   }
 
-  onJoinedRoom(roomId) {
-    this.setState({ joined: true, currentRoom: roomId });
-  }
-
   onMoveCharacter(direction) {
     if (this.state.playerId) {
       this._sceneController.moveCharacter(
@@ -228,7 +241,7 @@ class RoomContainer extends React.PureComponent {
         (player) => {
           this._serverConnection.emit('player_update', {
             player,
-            room: this.state.joined ? this.getRoomId() : this.state.playerId,
+            room: this.getRoomId(),
           });
         }
       );
@@ -267,7 +280,7 @@ class RoomContainer extends React.PureComponent {
     return (
       <div className="full-width glPanel p2">
         <HappyHourRoomContainer
-          //transparentBackground
+          transparentBackground
           getRenderModels={this._sceneController.getRenderModels}
           textureSpecs={this._sceneController.getTextureSpecs()}
           moveCharacter={this.onMoveCharacter}
@@ -333,14 +346,14 @@ class RoomContainer extends React.PureComponent {
 
   render() {
     const roomId = this.getRoomId();
-    const { activeRooms } = this.state;
+    const { activeRooms, currentRoom } = this.state;
     const peers = this.getVisiblePeerObjects();
 
     return (
       <Container className="app">
         <RoomsPanel
           activeRooms={activeRooms}
-          currentRoom={roomId}
+          currentRoom={currentRoom}
           onSelectRoom={(room) => this.onSelectRoom(room)}
         />
         {!!peers.length && (
@@ -360,12 +373,13 @@ class RoomContainer extends React.PureComponent {
   }
 }
 
-const createDefaultPlayer = (displayName, iconName) => ({
+const createDefaultPlayer = (id, displayName, iconName) => ({
+  id,
   actions: [],
   lastAction: null,
   lastPosition: { x: 0, y: 0 },
   lastTime: moment().valueOf(),
-  iconName: iconName || 'character_jesse',
+  iconName: iconName || 'beth',
   secsPerStep: 0.5,
   displayName: displayName,
 });

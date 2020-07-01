@@ -11,6 +11,7 @@ import yaml
 
 from webserver.settings import settings
 from .authentication import AuthenticationManager
+from .services.room import RoomService
 from .services.user import UserService
 
 
@@ -27,7 +28,7 @@ def create_app():
 
     app.static_folder = "../static"
 
-    rooms = {}
+    room_service = RoomService()
 
     @app.route("/", defaults={"path": ""}, methods=["GET"])
     @app.route("/<path:path>", methods=["GET"])
@@ -99,49 +100,35 @@ def create_app():
         # So this room_id will be their sid
         # When they join a group room we remove them from their own room
         room_id = data["room"]
-
-        if room_id not in rooms:
-            rooms[room_id] = RoomMetadata(room_id, sid)
-        room_metadata = rooms[room_id]
-
-        # Add them to the room and send a player_update
-        room_metadata.upsert_player(sid, data["player"])
-        emit("player_update", room_metadata.to_response(), room=room_id)
+        room_service.update_player(data["player"])
+        emit("player_update", room_service.get_room_details_response(room_id), room=room_id)
 
     @sio.on("join")
     def join(data):
-        print("START OF JOIN")
-        sid = flask.request.sid
+        print("Start of join2")
         room_id = data["room"]
+        player = data["player"]
 
-        # create room if necessary
-        if room_id not in rooms:
-            rooms[room_id] = RoomMetadata(room_id, sid)
-        room_metadata = rooms[room_id]
+        if room_service.is_player_in_room(player["id"], room_id):
+            joined_room_successfully(room_id)
+            return
 
-        # If the player's not already in this room, and the room has space for the player
-        if room_metadata.get_player(sid) is None and room_metadata.num_players() < settings["max_players_per_room"]:
-            # Get the player data from their own 'room' now that they're in a shared one
-            player_data = rooms[sid].get_player(sid)
-            # Now add them to the room
-            room_metadata.upsert_player(sid, player_data)
+        # Remove the player from any old rooms
+        old_room = room_service.delete_player(player["id"])
+        if old_room:
+            leave_room(old_room)
+            player_left_room(player["id"], old_room)
+
+        if not room_service.player_can_join_room(player["id"], room_id):
+            emit("join_failure", dict(message="Cannot join room"), broadcast=False)
+        else:
+            room_service.insert_player_in_room(player, room_id)
             join_room(room_id)
-            emit("player_update", room_metadata.to_response(), room=room_id)
-
-            print("JOIN: %s (%s) in room %s" % (data["sourceSid"], data["displayName"], room_id))
-
-            # Send an update to tell our game that the room's changed!!allRooms
-            emit("room_update", {"activeRooms": get_active_rooms_response()}, broadcast=True)
-
-            emit("new_user", data, include_self=False, room=room_id)
-            emit("joined", room_id, broadcast=False)
-        elif room_metadata.num_players() >= 5:
-            emit("full", room_id, broadcast=False)
-        # else they're already in the room...shrug?
+            player_entered_room(player, room_id)
+        rooms_changed()
 
     @sio.on("welcome")
     def welcome(data):
-        print(data)
         sid = flask.request.sid
         print("WELCOME from: %s (%s)" % (data["sourceSid"], data["displayName"]))
         emit("welcome", data, room=data["destSid"])  # Only send it to the intended recipient
@@ -158,35 +145,20 @@ def create_app():
         print("SDP to:", data["destSid"])
         emit("sdp", data, room=data["destSid"])  # Only send it to the intended recipient
 
-    @sio.on("exit_room")
-    def bye(data):
-        sid = flask.request.sid
-        print("EXIT ROOM", sid)
-        remove_player_from_room(sid, data["room"])
-        take_away_old_room_users_for_player(sid, data["room"])
-
     @sio.on("connect")
     def connect():
         sid = flask.request.sid
         print("CONNECT", sid)
         # Give an inital rooms update to the connecting user
-        emit("room_update", {"activeRooms": get_active_rooms_response()}, room=sid)
+        emit("room_update", {"active_rooms": room_service.get_all_rooms_response()}, room=sid)
 
     @sio.on("disconnect")
     def disconnect():
         sid = flask.request.sid
         print("DISCONNECT", sid)
 
-        # remove_player_from_room also cleans up the room, maybe deleting it from rooms
-        # so we have to do the deletes after, not while we're looping through the dictionary
-        rooms_to_remove_player_from = []
-        for room_id, room_metadata in rooms.items():
-            # For each room the player is in (should only be 1 at the moment)
-            if room_metadata.get_player(sid) is not None:
-                rooms_to_remove_player_from.append(room_id)
-
-        for room in rooms_to_remove_player_from:
-            remove_player_from_room(sid, room)
+        old_room = room_service.delete_player(sid)
+        player_left_room(sid, old_room)
 
     @sio.on_error_default
     def default_error_handler(e):
@@ -199,36 +171,22 @@ def create_app():
         print(traceback.format_exc())
         sio.emit("server_error", str(e))
 
-    def remove_player_from_room(sid, room_id):
-        print("Removing %s from room %s" % (sid, room_id))
-        room_metadata = rooms[room_id]
-        room_metadata.delete_player(sid)
-        emit("player_update", room_metadata.to_response(), room=room_id)
+    def player_left_room(player_id, room_id):
+        print("player_left_room", player_id, room_id)
+        emit("player_update", room_service.get_room_details_response(room_id), room=room_id)
+        emit("bye", player_id, room=room_id, include_self=False)
 
-        emit("bye", sid, room=room_id, include_self=False)
-        leave_room(room_id)  # NB this is a socketio function
+    def player_entered_room(player, room_id):
+        print("player_entered_room", player["id"], room_id)
+        emit("player_update", room_service.get_room_details_response(room_id), room=room_id)
+        emit("new_user", dict(player=player), include_self=False, room=room_id)
+        joined_room_successfully(room_id)
 
-        # If the last player is leaving, delete the room
-        if room_metadata.num_players() == 0:
-            print("Deleting a room!", room_id)
-            del rooms[room_id]
+    def joined_room_successfully(room_id):
+        emit("join_success", dict(room=room_service.get_room_details_response(room_id)), broadcast=False)
 
-        # Send an update to tell our game that the room's changed!!
-        emit("room_update", {"activeRooms": get_active_rooms_response()}, broadcast=True)
-
-    # TODO: Name this better lol
-    def take_away_old_room_users_for_player(sid, room_id):
-        # We're going to emit 'byes' to just the player who is leaving, for all players in the old room
-        room_metadata = rooms[room_id]
-        for player in room_metadata.get_players():
-            emit("bye", player["id"], room=sid)
-
-    def get_active_rooms_response():
-        return [
-            dict(id=room_id, count=metadata.num_players())
-            for room_id, metadata in rooms.items()
-            if metadata.is_public()
-        ]
+    def rooms_changed():
+        emit("room_update", dict(active_rooms=room_service.get_all_rooms_response()), broadcast=True)
 
     return app
 
@@ -254,40 +212,3 @@ def user_to_json(user):
         return {"id": user.id, "displayName": user.display_name}
     else:
         return None
-
-
-class RoomMetadata:
-    def __init__(self, room_id, creating_sid):
-        print("Creating a new room", room_id, creating_sid, creating_sid == room_id)
-        self._players = {}
-        self._room_id = room_id
-        self._is_players_private_room = creating_sid == room_id
-
-    def is_public(self):
-        return not self._is_players_private_room
-
-    def num_players(self):
-        return len(self._players)
-
-    def get_player(self, player_id):
-        if player_id in self._players:
-            return self._players[player_id]
-        return None
-
-    def get_players(self):
-        return self._players.values()
-
-    def upsert_player(self, player_id, player):
-        # If the player_id is changing, move the object
-        # This could happen maybe if the client tries to connect a player with old data
-        if player_id != player.get("id") and player.get("id") in self._players:
-            del self._players[player.get("id")]
-        player["id"] = player_id
-        self._players[player_id] = player
-
-    def delete_player(self, player_id):
-        if player_id in self._players:
-            del self._players[player_id]
-
-    def to_response(self):
-        return dict(room_id=self._room_id, players=list(self._players.values()))
