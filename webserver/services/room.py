@@ -77,8 +77,8 @@ class RoomService:
 
     def _sanity_check(self):
         if not set(self._rooms) == set(self._room_id_to_player_ids):
-            print(self._rooms)
-            print(self._room_id_to_player_ids)
+            print("rooms", self._rooms)
+            print("room id to player ids", self._room_id_to_player_ids)
             raise RuntimeError("Rooms does not match room ids to player ids")
         if not set(self._players) == set(self._player_id_to_room_id):
             print(self._players)

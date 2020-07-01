@@ -197,6 +197,8 @@ class RoomContainer extends React.PureComponent {
         this._serverConnection.emit('join', { player, room });
       }
     );
+    // TODO: Where should this call live?
+    setInterval(this.callUpdateGain, 3000); // or whatever step is reasonable
   }
 
   callUpdateGain() {

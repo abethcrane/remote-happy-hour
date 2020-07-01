@@ -91,6 +91,42 @@ export const WebRTC = (id, displayName, onPeersChanged, turnCreds) => {
         pos.id
       ].filterNode.frequency.value = filterFrequencyFromDistance;
     });
+
+    // WebRTC stats https://w3c.github.io/webrtc-stats
+    var statsByPeer = {}
+    Object.keys(peerConnections).forEach(peerSid => {
+      peerConnections[peerSid].pc.getStats().then(stats => {
+        statsByPeer[peerSid] = {}
+
+        stats.forEach(report => {
+          switch(report.type)
+          {
+            case "remote-inbound-rtp":
+              statsByPeer[peerSid][report.id] = {type: report.type, kind: report.kind, id: report.id, 
+                packetsLost: report.packetsLost, jitter: report.jitter, roundTripTime: report.roundTripTime};
+              break;
+            case "inbound-rtp":
+              statsByPeer[peerSid][report.id] = {type: report.type, kind: report.kind, id: report.id,
+                packetsLost: report.packetsLost, jitter: report.jitter, totalInterFrameDelay: report.totalInterFrameDelay};
+              break;
+            case "outbound-rtp":
+              statsByPeer[peerSid][report.id] = {type: report.type, kind: report.kind, id: report.id, 
+                totalEncodeTime: report.totalEncodeTime, totalPacketSendDelay: report.totalPacketSendDelay};
+              break;
+          }
+        });
+      })
+    });
+
+    // TODO why does this gate not work ?
+    if (Object.keys(statsByPeer).length > 0) {
+      console.log("RTC peer stats");
+      console.log(statsByPeer);
+    }
+    else {
+      console.log('no stats so sad');
+      console.log(statsByPeer);
+    }
   };
 
   function connectMyVideoStream() {
