@@ -29,7 +29,7 @@
     "jest": "^24.9.0",
     "node-sass": "^4.10.0",
     "prettier": "^2.0.1",
-    "protobufjs": "^6.8.8",
+    "protobufjs": "^6.11.3",
     "react-test-renderer": "^16.6.3",
     "sass-loader": "^7.3.1",
     "style-loader": "^1.0.0",
